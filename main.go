@@ -17,18 +17,32 @@ func init() {
 }
 
 func main() {
-	debug := flag.Bool("debug", false, "Debug Mode")
-	flag.Parse()
-
-	game = tl.NewGame()
-	game.SetDebugOn(*debug)
-	game.Screen().SetFps(30)
+	// Start the Game
+	game = newGame()
 
 	// Construct the level
 	level = newMainLevel()
 	ship := newShip()
 	level.AddEntity(ship)
-
 	game.Screen().SetLevel(level)
+
+	// Let's A Go
 	game.Start()
+}
+
+func newGame() *tl.Game {
+	debug := flag.Bool("debug", false, "Debug mode")
+	fps := flag.Float64("fps", 30.0, "Set frames per second")
+	displayFps := flag.Bool("fps-display", false, "Display frames per second on screen")
+	flag.Parse()
+
+	g := tl.NewGame()
+	g.SetDebugOn(*debug)
+
+	if *displayFps {
+		g.Screen().AddEntity(tl.NewFpsText(60, 0, tl.ColorWhite, tl.ColorBlack, 1))
+	}
+
+	g.Screen().SetFps(*fps)
+	return g
 }
