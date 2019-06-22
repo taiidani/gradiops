@@ -1,12 +1,14 @@
 package main
 
 import (
+	"flag"
 	"math/rand"
 	"time"
 
 	tl "github.com/JoelOtter/termloop"
 )
 
+var game *tl.Game
 var level *MainLevel
 
 func init() {
@@ -15,13 +17,18 @@ func init() {
 }
 
 func main() {
-	g := tl.NewGame()
-	g.Screen().SetFps(30)
+	debug := flag.Bool("debug", false, "Debug Mode")
+	flag.Parse()
 
+	game = tl.NewGame()
+	game.SetDebugOn(*debug)
+	game.Screen().SetFps(30)
+
+	// Construct the level
 	level = newMainLevel()
 	ship := newShip()
 	level.AddEntity(ship)
 
-	g.Screen().SetLevel(level)
-	g.Start()
+	game.Screen().SetLevel(level)
+	game.Start()
 }
