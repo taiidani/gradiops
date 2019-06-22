@@ -78,6 +78,8 @@ func (m *BuzzWord) Collide(collision tl.Physical) {
 	// Check if it's a bullet we're colliding with
 	if _, ok := collision.(*Bullet); ok {
 		currentText := m.Text.Text()
+		game.Log("Bullet hit text. Current text value:" + currentText)
+
 		if len(currentText) > 2 {
 			// Reduce the text by one
 			m.SetText(currentText[2:])

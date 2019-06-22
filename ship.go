@@ -95,6 +95,7 @@ func (ship *Ship) Tick(event tl.Event) {
 			}
 		case tl.KeySpace:
 			// FIRE DE CANNON!
+			game.Log("Bullet fired from ship")
 			b := newBullet(ship)
 			level.AddEntity(b)
 		}
