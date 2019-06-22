@@ -7,15 +7,11 @@ import (
 // Bullet represents a bullet fired from the Ship
 type Bullet struct {
 	*tl.Entity
+	IsTainted bool // If tainted, object will be removed during the next draw cycle
 }
 
-func newBullet(ship *Ship) *Bullet {
+func newBullet(startX int, startY int) *Bullet {
 	const width, height = 1, 1
-
-	// Get Ship point for where bullet emits from
-	shipX, shipY := ship.Position()
-	shipWidth, _ := ship.Size()
-	startX, startY := shipX+shipWidth, shipY+3
 
 	// Create the bullet
 	bullet := &Bullet{
@@ -36,9 +32,17 @@ func (bullet *Bullet) Draw(screen *tl.Screen) {
 	screenX, _ := screen.Size()
 	x, y := bullet.Position()
 
-	// If not visible, reroll
-	if x < screenX {
-		x++
+	// Bullet advances!
+	x++
+
+	// Off screen means its no longer needed, taint it
+	if x >= screenX {
+		bullet.IsTainted = true
+	}
+
+	if bullet.IsTainted {
+		screen.Level().RemoveEntity(bullet)
+		return
 	}
 
 	bullet.SetPosition(x, y)
@@ -49,6 +53,6 @@ func (bullet *Bullet) Draw(screen *tl.Screen) {
 func (bullet *Bullet) Collide(collision tl.Physical) {
 	// Check if it's evil Text we're colliding with
 	if _, ok := collision.(*BuzzWord); ok {
-		level.RemoveEntity(bullet)
+		bullet.IsTainted = true
 	}
 }

@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"math/rand"
 	"time"
 
@@ -9,7 +10,7 @@ import (
 )
 
 var game *tl.Game
-var level *MainLevel
+var score int
 
 func init() {
 	// Seed the faker library
@@ -21,9 +22,8 @@ func main() {
 	game = newGame()
 
 	// Construct the level
-	level = newMainLevel()
-	ship := newShip()
-	level.AddEntity(ship)
+	level := newBaseLevel()
+	game.Screen().AddEntity(newHUD(level))
 	game.Screen().SetLevel(level)
 
 	// Let's A Go
@@ -45,4 +45,12 @@ func newGame() *tl.Game {
 
 	g.Screen().SetFps(*fps)
 	return g
+}
+
+func gameOver() {
+	screen := tl.NewScreen()
+	screen.AddEntity(tl.NewText(0, 1, "GAME OVER", tl.ColorWhite, tl.ColorDefault))
+	screen.AddEntity(tl.NewText(0, 2, fmt.Sprintf("Final Score: %d", score), tl.ColorWhite, tl.ColorDefault))
+	screen.AddEntity(tl.NewText(0, 4, "Press Ctrl+C to Close", tl.ColorWhite, tl.ColorDefault))
+	game.SetScreen(screen)
 }
