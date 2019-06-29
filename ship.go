@@ -4,6 +4,10 @@ import (
 	tl "github.com/JoelOtter/termloop"
 )
 
+// shipGunOffset is the number of units from the top of the ship to where its gun is.
+// Used for detetermining the gun position to build bullets from
+const shipGunOffset = 2
+
 // Ship represents a controllable player ship
 type Ship struct {
 	*tl.Entity
@@ -29,7 +33,7 @@ func newShip() *Ship {
 			cell.Ch = '옷'
 
 		// Gun
-		case x == width-1 && y == 2:
+		case x == width-1 && y == shipGunOffset:
 			cell.Bg = tl.ColorRed
 			cell.Ch = ' '
 
@@ -64,7 +68,7 @@ func newShip() *Ship {
 
 	// Middle - Fuselage
 	for x := 0; x < width; x++ {
-		sprite[x][2] = *makeCell(x, 2)
+		sprite[x][shipGunOffset] = *makeCell(x, shipGunOffset)
 	}
 
 	ship.ApplyCanvas(&sprite)
@@ -77,7 +81,7 @@ func (ship *Ship) Draw(screen *tl.Screen) {
 	x, y := ship.Position()
 
 	if ship.IsFiring {
-		b := newBullet(x+width, y+2)
+		b := newBullet(x+width, y+shipGunOffset)
 		screen.Level().AddEntity(b)
 		ship.IsFiring = false
 	}
@@ -87,8 +91,7 @@ func (ship *Ship) Draw(screen *tl.Screen) {
 
 // Tick is triggered in response to user input
 func (ship *Ship) Tick(event tl.Event) {
-	const constraintRight = 15
-	constraintTop := 15 // TODO Get from screen
+	constraintRight, constraintTop := game.Screen().Size()
 
 	if event.Type == tl.EventKey { // Is it a keyboard event?
 		x, y := ship.Position()
@@ -108,7 +111,7 @@ func (ship *Ship) Tick(event tl.Event) {
 				ship.SetPosition(x, y-1)
 			}
 		case tl.KeyArrowDown:
-			if y+height < constraintTop {
+			if y+height < constraintTop-hudOffset {
 				ship.SetPosition(x, y+1)
 			}
 		case tl.KeySpace:

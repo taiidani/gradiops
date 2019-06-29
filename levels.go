@@ -4,6 +4,9 @@ import (
 	tl "github.com/JoelOtter/termloop"
 )
 
+// hudOffset is the number of units that the HUD takes up at the top of the screen
+const hudOffset = 2
+
 // BaseLevel is the canvas that all level objects are written to
 type BaseLevel struct {
 	*tl.BaseLevel
@@ -20,8 +23,8 @@ func newBaseLevel() *BaseLevel {
 		}),
 	}
 
-	// Offset the level to handle menus
-	lvl.SetOffset(0, 2)
+	// Offset the level to handle HUD
+	lvl.SetOffset(0, hudOffset)
 
 	// Lay out persistent resources
 	lvl.Ship = newShip()
