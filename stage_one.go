@@ -16,6 +16,16 @@ func newStageOne() *Stage {
 		"ShiftLeft",
 		"DevSecOps",
 		"CI/CD",
+		"Guild",
+		"Scrum",
+		"Kanban",
+		"Sprint",
+		"Agile",
+		"ChatOps",
+		"GitOps",
+		"Lambda",
+		"Cloud",
+		"Docker",
 	}
 
 	ret := &Stage{

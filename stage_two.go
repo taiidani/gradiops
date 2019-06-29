@@ -14,6 +14,17 @@ func newStageTwo() *Stage {
 		"InfrastructureAsCode",
 		"ContinuousIntegration",
 		"ContinuousDeployment",
+		"Waterfall",
+		"Blockchain",
+		"Microservices",
+		"MachineLearning",
+		"Automation",
+		"InternetOfThings",
+		"VirtualReality",
+		"SearchEngineOptimization",
+		"Serverless",
+		"Containers",
+		"DataMining",
 	}
 
 	ret := &Stage{
