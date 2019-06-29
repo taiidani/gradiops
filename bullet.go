@@ -20,7 +20,7 @@ func newBullet(startX int, startY int) *Bullet {
 
 	for y := 0; y < height; y++ {
 		for x := 0; x < width; x++ {
-			bullet.SetCell(x, y, &tl.Cell{Fg: tl.RgbTo256Color(80, 80, 50), Bg: tl.ColorBlack, Ch: '='})
+			bullet.SetCell(x, y, &tl.Cell{Fg: tl.RgbTo256Color(180, 180, 150), Bg: tl.ColorBlack, Ch: '='})
 		}
 	}
 

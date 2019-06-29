@@ -22,11 +22,11 @@ type BuzzWord struct {
 func newText(word string, x int, y int) *BuzzWord {
 	colors := []tl.Attr{
 		tl.ColorBlack,
-		tl.RgbTo256Color(50, 0, 0),
-		tl.RgbTo256Color(0, 50, 0),
-		tl.RgbTo256Color(0, 50, 50),
-		tl.RgbTo256Color(50, 50, 0),
-		tl.RgbTo256Color(50, 50, 50),
+		tl.RgbTo256Color(40, 0, 0),
+		tl.RgbTo256Color(0, 40, 0),
+		tl.RgbTo256Color(0, 40, 40),
+		tl.RgbTo256Color(40, 40, 0),
+		tl.RgbTo256Color(40, 40, 40),
 	}
 
 	// Text will be rolled at first draw time

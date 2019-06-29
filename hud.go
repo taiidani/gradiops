@@ -29,7 +29,7 @@ func newHUD(level *BaseLevel) *HUD {
 
 // Draw will lay out the level onto the screen
 func (hud *HUD) Draw(screen *tl.Screen) {
-	hud.Entities[0].(*tl.Text).SetText(fmt.Sprintf("Stage: %d", hud.level.Stage))
+	hud.Entities[0].(*tl.Text).SetText(fmt.Sprintf("Stage: %s", hud.level.stage.Title))
 	hud.Entities[1].(*tl.Text).SetText(fmt.Sprintf("Score: %d", score))
 
 	hud.BaseLevel.Draw(screen)

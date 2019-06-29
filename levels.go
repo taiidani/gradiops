@@ -10,25 +10,19 @@ const hudOffset = 2
 // BaseLevel is the canvas that all level objects are written to
 type BaseLevel struct {
 	*tl.BaseLevel
-	Ship  *Ship
-	Stage int
+	Ship     *Ship
+	stageNum int
+	stage    *Stage
 }
 
 func newBaseLevel() *BaseLevel {
 	lvl := &BaseLevel{
 		BaseLevel: tl.NewBaseLevel(tl.Cell{
-			Bg: tl.RgbTo256Color(10, 10, 50),
+			Bg: tl.ColorDefault,
 			Fg: tl.ColorBlack,
 			Ch: '.',
 		}),
 	}
-
-	// Offset the level to handle HUD
-	lvl.SetOffset(0, hudOffset)
-
-	// Lay out persistent resources
-	lvl.Ship = newShip()
-	lvl.AddEntity(lvl.Ship)
 
 	return lvl
 }
@@ -44,8 +38,8 @@ func (m *BaseLevel) Draw(screen *tl.Screen) {
 	}
 
 	if !levelRunning {
-		m.Stage++
-		m.SetStage(m.Stage)
+		m.stageNum++
+		m.SetStage(m.stageNum)
 	}
 
 	m.BaseLevel.Draw(screen)
@@ -53,24 +47,14 @@ func (m *BaseLevel) Draw(screen *tl.Screen) {
 
 // SetStage will initialize the level to a given stage
 func (m *BaseLevel) SetStage(stage int) {
-	// Clear the level
-	for _, entity := range m.Entities {
-		if _, ok := entity.(*Ship); ok {
-			continue
-		}
-
-		m.RemoveEntity(entity)
-	}
-
-	// And populate the new one
-	m.Stage = stage
-
 	switch stage {
 	case 1:
-		initStageOne(m)
+		m.stage = newStageOne()
 	case 2:
-		initStageTwo(m)
+		m.stage = newStageTwo()
 	default:
 		gameOver()
 	}
+
+	m.stage.init(m)
 }
