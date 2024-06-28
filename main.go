@@ -2,8 +2,6 @@ package main
 
 import (
 	"flag"
-	"math/rand"
-	"time"
 
 	tl "github.com/JoelOtter/termloop"
 )
@@ -16,11 +14,6 @@ var displayFps *bool
 // Global state
 var game *tl.Game
 var score int
-
-func init() {
-	// Seed the faker library
-	rand.Seed(time.Now().Unix())
-}
 
 func main() {
 	debug = flag.Bool("debug", false, "Debug mode")

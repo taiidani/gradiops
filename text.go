@@ -2,7 +2,6 @@ package main
 
 import (
 	"math/rand"
-	"sync"
 
 	tl "github.com/JoelOtter/termloop"
 )
@@ -10,8 +9,6 @@ import (
 // maxTextLength is the maximum length that text can be.
 // It determines the "gutter" where text objects are off screen and can be recycled.
 const maxTextLength = 50
-
-var deathMutex = sync.Mutex{}
 
 // BuzzWord represents a text object that needs destruction
 type BuzzWord struct {
