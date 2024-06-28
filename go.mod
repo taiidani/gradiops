@@ -1,6 +1,6 @@
 module github.com/taiidani/gradiops
 
-go 1.12
+go 1.22.4
 
 require (
 	github.com/JoelOtter/termloop v0.0.0-20190610115908-1c1651ed3625
