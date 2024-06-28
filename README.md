@@ -4,7 +4,7 @@ Transform your company by exploring various industry buzzwords to find the one t
 
 ## Running
 
-Install Go 1.11+ on your machine, ensure Go's `bin` folder is in your PATH, then run:
+Install Go 1.21+ on your machine, ensure Go's `bin` folder is in your PATH, then run:
 
 ```sh
 go get -u github.com/taiidani/gradiops

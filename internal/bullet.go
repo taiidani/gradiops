@@ -1,4 +1,4 @@
-package main
+package internal
 
 import (
 	tl "github.com/JoelOtter/termloop"

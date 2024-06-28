@@ -1,4 +1,4 @@
-package main
+package internal
 
 import (
 	"fmt"
@@ -36,7 +36,7 @@ func (l *GameOverLevel) Tick(event tl.Event) {
 		switch event.Key { // If so, switch on the pressed key.
 		case tl.KeyEnter:
 			game.Log("User initiated new game")
-			newGame()
+			game.Restart()
 		}
 	}
 }

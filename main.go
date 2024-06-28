@@ -3,17 +3,13 @@ package main
 import (
 	"flag"
 
-	tl "github.com/JoelOtter/termloop"
+	"github.com/taiidani/gradiops/internal"
 )
 
 // Flags
 var debug *bool
 var fps *float64
 var displayFps *bool
-
-// Global state
-var game *tl.Game
-var score int
 
 func main() {
 	debug = flag.Bool("debug", false, "Debug mode")
@@ -22,29 +18,9 @@ func main() {
 	flag.Parse()
 
 	// Start the Game
-	setupGame()
-	newGame()
+	game := internal.SetupGame(*debug, *displayFps, *fps)
+	game.Restart()
 
 	// Let's A Go
 	game.Start()
-}
-
-func setupGame() {
-	game = tl.NewGame()
-	game.SetDebugOn(*debug)
-}
-
-func newGame() {
-	score = 0
-	game.Log("Starting new game")
-
-	if *displayFps {
-		game.Screen().AddEntity(tl.NewFpsText(60, 0, tl.ColorWhite, tl.ColorBlack, 1))
-	}
-	game.Screen().SetFps(*fps)
-
-	// Construct the level
-	level := newBaseLevel()
-	game.Screen().AddEntity(newHUD(level))
-	game.Screen().SetLevel(level)
 }
